@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Displacement Loop - AMB Simulation Library</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Displacement Loop";
+    var mkdocs_page_input_path = "displacement.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> AMB Simulation Library</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../current/">Current Loop</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Displacement Loop</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#1">1 基本模型</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#2">2 线性模型与非线性模型</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#3">3 零电流控制与零作用力控制</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#31">3.1 零电流控制</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#32">3.2 零作用力控制</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#4">4 转速辨识与位移振动抑制</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../sensor/">Sensor</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">AMB Simulation Library</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Displacement Loop</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="_1">磁轴承位置控制模型<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<div class="codehilite"><pre><span></span><code>基于 AMB_Simulation_Lib/DisplaceLoop/displacelooppara.m
+</code></pre></div>
+
+
+<h2 id="1">1 基本模型<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><code>AMB_Simulation_Lib/DisplaceLoop/Basic.slx
+</code></pre></div>
+
+
+<p>磁悬浮飞轮转子的不平衡振动会造成飞轮系统的基频扰动，是磁悬浮飞轮最主要的振动源。转子的不平衡是指转子的几何轴与惯性主轴不重合，而磁悬浮飞轮的工作原理是将飞轮转子悬浮于转子的几何轴，因此当飞轮绕转子几何轴旋转时，飞轮的惯性主轴就会绕几何轴转动，从而就会有离心力等扰动力与扰动力矩输出。</p>
+<p><img alt="" src="../img/2020-04-10-16-31-34.png" />
+<center>磁悬浮轴承转子示意图</center></p>
+<p><img alt="" src="../img/basic.jpg" />
+<center>磁悬浮轴承控制框图</center></p>
+<h2 id="2">2 线性模型与非线性模型<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><code>AMB_Simulation_Lib/DisplaceLoop/Linear &amp; Nonlinear.slx
+</code></pre></div>
+
+
+<p>磁悬浮轴承为典型的非线性系统，但是在分析过程中通常会对其在平衡位置进行线性化，该模型旨在对比线性模型与非线性模型。</p>
+<h2 id="3">3 零电流控制与零作用力控制<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><code>AMB_Simulation_Lib/DisplaceLoop/NTC_ZC_ZF.slx
+</code></pre></div>
+
+
+<p>磁悬浮轴承的转子承受的力在经过线性化后，主要由电流项和位移项共同决定。通过减小磁悬浮轴承上转速同频力来进行振动抑制方法主要有零电流控制与零作用力控制两种。</p>
+<h3 id="31">3.1 零电流控制<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
+<p>把ki里的正弦去掉，在控制器前（反馈通路上）加入陷波器。
+在控制信号通路或者反馈回路中利用陷波器将位移信号中的同频分量去除，由于同频干扰是位移信号中频率为<span><span class="MathJax_Preview">\omega_R</span><script type="math/tex">\omega_R</script></span>的正弦量，因此可以采用中心陷波频率随转速变化的自适应陷波器对其进行去除。自适应陷波器工作原理如下图所示，陷波器<span><span class="MathJax_Preview">N</span><script type="math/tex">N</script></span>的核心是凹陷反馈环节<span><span class="MathJax_Preview">N_f</span><script type="math/tex">N_f</script></span>，其中心频率可依据转速变化而改变， <span><span class="MathJax_Preview">\epsilon</span><script type="math/tex">\epsilon</script></span>决定陷波器 <span><span class="MathJax_Preview">N(s)</span><script type="math/tex">N(s)</script></span>的收敛速度和中心陷波带宽。 </p>
+<p><img alt="" src="../img/2020-04-10-16-46-53.png" />
+<center>前项通道含陷波器控制框图</center></p>
+<p>陷波器反馈环节<span><span class="MathJax_Preview">N_f</span><script type="math/tex">N_f</script></span>的传递函数为</p>
+<div>
+<div class="MathJax_Preview">\begin{equation}
+N_f(s)=\frac{s}{s^2+\omega_R^2}
+\end{equation}</div>
+<script type="math/tex; mode=display">\begin{equation}
+N_f(s)=\frac{s}{s^2+\omega_R^2}
+\end{equation}</script>
+</div>
+<p>陷波器整体的传递函数<span><span class="MathJax_Preview">N_O</span><script type="math/tex">N_O</script></span>为</p>
+<div>
+<div class="MathJax_Preview">\begin{equation}
+N_O(s)=\frac{\epsilon s}{s^2+\epsilon s+\omega_R^2}
+\end{equation}</div>
+<script type="math/tex; mode=display">\begin{equation}
+N_O(s)=\frac{\epsilon s}{s^2+\epsilon s+\omega_R^2}
+\end{equation}</script>
+</div>
+<p>陷波器在使用时需要考虑系统的稳定性问题，根据被控对象传递函数，在磁轴承转速高低两种情况下需要进行符号的切换。</p>
+<h3 id="32">3.2 零作用力控制<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
+<p>把ks里的正弦去掉，在电流通路上对位移引起的转速同频力进行抵消。
+在控制电流中加入了对位移刚度力的补偿项，依据获得的不平衡量参数对位移刚度力中的同频量进行补偿。</p>
+<p><img alt="" src="../img/2020-04-10-16-53-40.png" />
+<center>零作用力控制框图</center></p>
+<p>补偿机构中<span><span class="MathJax_Preview">K=K_h/K_i</span><script type="math/tex">K=K_h/K_i</script></span>，为磁轴承位移刚度与电流刚度的比值。控制作用切换开关<span><span class="MathJax_Preview">\sigma_1,\sigma_2\in\{0,1\}</span><script type="math/tex">\sigma_1,\sigma_2\in\{0,1\}</script></span>， <span><span class="MathJax_Preview">\sigma_1</span><script type="math/tex">\sigma_1</script></span>为开闭环控制开关，用于当自适应陷波器<span><span class="MathJax_Preview">N</span><script type="math/tex">N</script></span>收敛后断开陷波器的输入，利用辨识的不平衡量参数，对位移信号中的同频量进行开环补偿；<span><span class="MathJax_Preview">\sigma_2</span><script type="math/tex">\sigma_2</script></span>为位移刚度力补偿控制开关，用于控制是否对位移刚度力进行补偿。</p>
+<h2 id="4">4 转速辨识与位移振动抑制<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><code>AMB_Simulation_Lib/DisplaceLoop/SOGI_NTC_FARWARD
+</code></pre></div>
+
+
+<p>采用基于SOGI-FLL的转子频率估计法。SOGI-FLL主要包括二阶广义积分模块、锁频环模块以及增益归一化模块。其中，<span><span class="MathJax_Preview">v_\alpha、v_\beta</span><script type="math/tex">v_\alpha、v_\beta</script></span>为SOGI的两相输出，<span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span>为 SOGI的估计误差，<span><span class="MathJax_Preview">e_f</span><script type="math/tex">e_f</script></span>为FLL的估计误差，<span><span class="MathJax_Preview">\omega_f</span><script type="math/tex">\omega_f</script></span>为初始触发频率， <span><span class="MathJax_Preview">\omega^,</span><script type="math/tex">\omega^,</script></span>为估计频率。</p>
+<p><img alt="" src="../img/2020-04-15-14-45-39.png" />
+<center>SOGI-FLL频率估计框图</center></p>
+<p>通过二阶广义积分-锁频环（SOGI-FLL）后接广义带通滤波器（GBPF）的方法从控制电流信号中提取振动频率，对其控制电流中的同频分量进行放大，对位移中的同频振动进行抵消。</p>
+<p><img alt="" src="../img/2020-04-15-15-00-09.png" />
+<center>磁悬浮轴承转子位移振动抑制框图</center></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../sensor/" class="btn btn-neutral float-right" title="Sensor">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../current/" class="btn btn-neutral" title="Current Loop"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../current/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../sensor/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../js/extra.js" defer></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
